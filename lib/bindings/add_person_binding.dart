@@ -1,9 +1,9 @@
-import 'package:account_app/controller/add_person_controller.dart';
+import 'package:account_app/controller/add_person_controller/add_person_controller.dart';
 import 'package:get/get.dart';
 
 class AddPersonBinding implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AddPersonController>(() => AddPersonController());
+    Get.put<AddPersonController>(AddPersonController());
   }
 }

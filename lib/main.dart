@@ -1,25 +1,38 @@
 import 'package:account_app/app.dart';
+import 'package:account_app/controller/add_person_controller/add_person_controller.dart';
+import 'package:account_app/services/auth/auth_services.dart';
+import 'package:account_app/services/database/data_base_services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-void main() async {
+import 'controller/controller.dart';
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(const MyApp());
-}
+  await Firebase.initializeApp();
+  Get.put<AuthController>(
+    AuthController(
+      authServices: AuthServices(auth: FirebaseAuth.instance),
+    ),
+  );
+  print(Get.find<AuthController>().authServices.auth.currentUser!.uid +
+      '            ----------------------------------');
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  Get.put<DataBaseController>(
+    DataBaseController(
+      DataBaseServices(firestore: FirebaseFirestore.instance),
+    ),
+  );
+  Get.put(() => AddPersonController());
 
-  @override
-  Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Flutter Demo',
-      home: const MainApp(),
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-    );
-  }
+  await SystemChrome.setPreferredOrientations(
+    [
+      DeviceOrientation.portraitUp,
+    ],
+  );
+  runApp(App());
 }

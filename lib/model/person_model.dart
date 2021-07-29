@@ -1,36 +1,21 @@
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Person {
-  late final String name;
-  late final String des;
-  late final bool iscompelete;
-  late final bool isgive;
+  final String name;
+  final int? phonenumber;
+  final String? des;
+  final bool? iscompelete;
+  final bool isgive;
+  final int price;
+  final Timestamp timestamp;
   Person({
     required this.name,
-    required this.des,
-    required this.iscompelete,
+    this.phonenumber,
+    this.des,
+    this.iscompelete,
     required this.isgive,
+    required this.price,
+    required this.timestamp,
   });
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Person &&
-        other.name == name &&
-        other.des == des &&
-        other.iscompelete == iscompelete &&
-        other.isgive == isgive;
-  }
-
-  @override
-  int get hashCode {
-    return name.hashCode ^
-        des.hashCode ^
-        iscompelete.hashCode ^
-        isgive.hashCode;
-  }
-
-  @override
-  String toString() {
-    return 'Person(name: $name, des: $des, iscompelete: $iscompelete, isgive: $isgive)';
-  }
 }
